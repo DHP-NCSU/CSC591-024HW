@@ -1,8 +1,9 @@
-# Easier  AI (just the important bits)
+# JJR Hepo
 
+- JJR1: Nothing works better than 50 random guessed for low dimensional problems (less than 6 x attributes).
+- JJR2: But such random guessing is rubbish for higher dimensional data. Let us test that.
 
-&copy; 2024 Tim Menzies, timm@ieee.org     
-BSD-2 license. Share and enjoy.  
+This is a repo varifying this hepotheses
 
 ----------------------------------
 
