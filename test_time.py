@@ -9,8 +9,14 @@ def guess(N, d):
 
 
 start = time.time()
-data_file = "data/config/SS-B.csv"
-somes = []
+# data_file = "data/classify/diabetes.csv"
+# data_file = "data/config/SS-A.csv"
+data_file = "data/config/SS-X.csv"
+
+
+nd = DATA().adds(csv(data_file))
+b4 = [nd.chebyshev(row) for row in nd.rows]
+somes = [stats.SOME(b4,f"asIs,{len(nd.rows)}")]
 for N in (20, 30, 40, 50):
     print("now running with N = {}".format(N))
     d = DATA().adds(csv(data_file))
@@ -23,9 +29,7 @@ for N in (20, 30, 40, 50):
     
     # Smart approach
     print("now running smart method")
-    
     the.Last = N
-    print(the)
     smart = [d.shuffle().activeLearning() for _ in range(20)]
     smart = [d.chebyshev(lst[0]) for lst in smart]
     somes.append(stats.SOME(smart, f"smart,{N}"))
