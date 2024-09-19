@@ -27,10 +27,9 @@ def run_comparison(data_file):
 
 if __name__ == "__main__":
     # data_files = ["data/misc/auto93.csv"]  # Add more data files as needed
-    with open("low_files.txt", 'r') as f:
+    with open("full_files.txt", 'r') as f:
         data_files = f.readlines()
     new_data_files = [file.strip() for file in data_files]
     for file in new_data_files:
         print(f"\nResults for {file}:")
         run_comparison(file)
-        break

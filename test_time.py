@@ -9,7 +9,7 @@ def guess(N, d):
 
 
 start = time.time()
-data_file = "data/config/SS-X.csv"
+data_file = "data/config/SS-B.csv"
 somes = []
 for N in (20, 30, 40, 50):
     print("now running with N = {}".format(N))
@@ -23,12 +23,14 @@ for N in (20, 30, 40, 50):
     
     # Smart approach
     print("now running smart method")
+    
     the.Last = N
+    print(the)
     smart = [d.shuffle().activeLearning() for _ in range(20)]
     smart = [d.chebyshev(lst[0]) for lst in smart]
     somes.append(stats.SOME(smart, f"smart,{N}"))
 
-stats.report(somes)
+stats.report(somes, 0.01)
 end = time.time()
 
 print(end-start)
