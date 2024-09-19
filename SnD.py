@@ -13,6 +13,7 @@ def run_comparison(data_file):
         
         # Dumb approach
         dumb = [guess(N, d) for _ in range(20)]
+        print(dumb[0][0])
         dumb = [d.chebyshev(lst[0]) for lst in dumb]
         somes.append(stats.SOME(dumb, f"dumb,{N}"))
         
@@ -28,7 +29,8 @@ if __name__ == "__main__":
     # data_files = ["data/misc/auto93.csv"]  # Add more data files as needed
     with open("low_files.txt", 'r') as f:
         data_files = f.readlines()
-    new_data_files = ['data/' + file.strip() for file in data_files]
+    new_data_files = [file.strip() for file in data_files]
     for file in new_data_files:
         print(f"\nResults for {file}:")
         run_comparison(file)
+        break
