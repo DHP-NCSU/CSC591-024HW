@@ -2,9 +2,12 @@ import random
 import sys
 from ezr import DATA, stats, the, csv, stats
 
+
 def guess(N, d):
     some = random.choices(d.rows, k=N)
     return d.clone().adds(some).chebyshevs().rows
+
+#This function randomly selects N rows from a DATA instance d and ranks them using a method chebyshevs() to potentially order them by their importance or effectiveness according to some criteria.
 
 def run_comparison(data_file):
     nd = DATA().adds(csv(data_file))
