@@ -57,13 +57,13 @@ def test_Chebyshevs():
     assert len(point[1]) == 20, "Test failed: Smart approach did not run 20 times" #"1 smart"
 
     # Test 3: Ensure 'smart' and 'dumb' lists have the correct length (N=20)
-    N = 20  # You can adjust the sample size if needed
+    N = 20  # adjust the sample size if needed
     dumb = [guess(N, d) for _ in range(20)]
     dumb_lengths = [len(lst) for lst in dumb]
     assert all(length == N for length in dumb_lengths),\
         "Test failed: Dumb approach lists are not of length N"
 
-    the.Last = N ## Set the 'Last' parameter for the smart approach
+    the.Last = N #Set the 'Last' parameter for the smart approach
     smart = [d.shuffle().activeaLearning() for _ in range(20) ]
     smart_lengths = [len(lst[0]) for lst in smart]
     assert all(length == N for length in smart_lengths), \
