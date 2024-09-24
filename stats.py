@@ -25,14 +25,14 @@ class SOME:
       "Print the reservoir sampling."
       return  'SOME('+str(dict(txt=i.txt,rank="i.rank",n=i.n,all=len(i.has()),ok=i.ok))+")"
 
-    def adds(i,a):  
+    def adds(i,a):  #水库抽样法:reservoir sampling
       "Handle multiple nests samples."
       for b in a:
         if   isinstance(b,(list,tuple)): [i.adds(c) for c in b]  
         elif isinstance(b,SOME):         [i.add(c) for c in b.has()]
         else: i.add(b) 
 
-    def add(i,x):  
+    def add(i,x):  #添加单个数据，并根据水库抽样方法随机决定是否替换已有数据
       i.n += 1
       i.lo = min(x,i.lo)
       i.hi = max(x,i.hi)
@@ -44,7 +44,7 @@ class SOME:
       "True if all of cohen/cliffs/bootstrap say you are the same."
       return  i.cliffs(j) and i.bootstrap(j) ## ordered slowest to fastest
 
-    def has(i) :
+    def has(i) : #返回排序后的样本数据
       "Return the numbers, sorted."
       if not i.ok: i._has.sort()
       i.ok=True
@@ -54,7 +54,7 @@ class SOME:
       "Return the middle of the distribution."
       l = i.has(); return l[len(l)//2]
 
-    def div(i):
+    def div(i): #
        "Return the deviance from the middle." 
        l = i.has(); return (l[9*len(l)//10] - l[len(l)//10])/2.56
 
