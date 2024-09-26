@@ -145,5 +145,27 @@ baseline     0 (  0)      0 (  0)      0 (  0)      0 (  0)      0 (  0)      0 
 dumb        65 ( 26)     62 ( 19)     60 (  0)     75 (  0)      0 (  0)      0 (  0)
 ```
 
+### Analysis
+
+Based on the analysis of the experimental results, several observations can be made:
+
+1. **Low-Dimensional Data**:
+   - **Performance of Methods**: Both the 'smart' and 'dumb' methods perform well, achieving a high percentage of rank 0 outcomes. Specifically, the 'smart' method achieves rank 0 in 87% of the runs, while the 'dumb' method achieves rank 0 in 67% of the runs.
+   - **Effect of Increasing N**: Increasing the number of random guesses $ N $ from 20 to 50 does not significantly improve the performance of the 'dumb' method. Although a higher $ N $ is generally expected to result in better performance in random guessing--since it increases the probability of finding a good choice--this effect is not strongly evident in the results.
+   - **Comparison with Baseline**: Both methods show substantial improvement over the baseline.
+
+2. **High-Dimensional Data**:
+   - **Performance of Methods**: The 'smart' method significantly outperforms the 'dumb' method. The 'smart' method achieves rank 0 in 88% of the runs, whereas the 'dumb' method achieves rank 0 in only 50% of the runs.
+   - **Effect of Random Guessing**: The 'dumb' method's performance decreases in high-dimensional data, aligning with the expectation that random guessing becomes less effective as dimensionality increases.
+
+3. **Correlation Between N and Performance**:
+   - **Random Guessing**: There is no clear evidence that increasing $ N $ leads to better performance in random guessing. The average number of guesses leading to rank 0 is not consistently near 50.
+   - **Reliability of Methods**: The 'smart' method maintains high performance regardless of $ N $ (with a high standard deviation), suggesting that it is more reliable than random guessing, especially in higher dimensions.
+
 ## Conclusion
-Based on the observed results from the experiments...
+
+Since we observed that in low-dimensional data, the 'smart' method consistently outperforms random guessing, and that increasing the number of random guesses does not significantly enhance performance, we **refine the JJR1 hypothesis** as follows:
+
+- **Refined JJR1**: Even in low-dimensional problems, the 'smart' method outperforms random guessing, and increasing the number of random guesses beyond a certain point does not necessarily improve performance.
+
+- **Confirmed JJR2**: In higher-dimensional data, random guessing is ineffective, and smarter, more targeted methods are necessary to achieve good performance.
