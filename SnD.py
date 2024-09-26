@@ -53,7 +53,8 @@ def run_comparison(data_file):
         somes.append(stats.SOME(smart, f"smart,{N}"))
     
     stats.report(somes)
-    return [dumb, smart]
+    return [dumb, smart,b4]
+
 
 
 if __name__ == "__main__":
