@@ -58,16 +58,6 @@ def run_comparison(data_file):
 
 
 if __name__ == "__main__":
-    # data_files = ["data/misc/auto93.csv"]  # Add more data files as needed
-    # with open("full_files.txt", 'r') as f:
-    #     data_files = f.readlines()
-    # new_data_files = [file.strip() for file in data_files]
-    # for file in new_data_files:
-    #     try:
-    #         print(f"\nResults for {file}:")
-    #         run_comparison(file)
-    #     except:
-    #         continue
     try:
         run_comparison(sys.argv[1])
     except:

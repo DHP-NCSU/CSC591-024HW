@@ -1,45 +1,15 @@
-from SnD import DATA, stats, the, csv
-from SnD import run_comparison as r_c
+from ezr import DATA, the, csv
+from SnD import guess, run_comparison
 
 from copy import deepcopy
-import random
 
-def guess(N,d):
-    """
-       Selects N random rows from the dataset managed by the DATA instance 'd', performs a ranking using
-       the 'chebyshevs()' method which presumably organizes them based on some optimization criterion,
-       and returns these ranked rows.
 
-       Args:
-           N (int): Number of rows to randomly select and evaluate.
-           d (DATA): Instance of DATA containing rows of the dataset.
-
-       Returns:
-           list: Ranked rows after evaluation using 'chebyshevs()' method.
-       """
-    some = random.choices(d.rows, k=N)
-    return d.clone().adds(some).chebyshevs().rows
-
-def test_Chebyshevs(data_file):
-    """
-    Tests the `chebyshevs()` method and related functionality of the DATA class, checking:
-    - Whether `chebyshevs().rows[0]` returns the top item.
-    - Whether 'smart' and 'dumb' lists have the correct length.
-    - Whether the experimental treatment runs 20 times for statistical validity.
-    - Whether `d.shuffle()` randomizes the order of the data correctly.
-    Args:
-        None
-
-    Returns:
-        None: This function prints the result of various tests.
-    """
-    # Test 1: Ensure chebyshevs() sorts the rows and returns a top item
 def test_chebyshev(data_file): #add function
     #调用的b4去找它的top的值，去检测那个值
 
     data_file = "data/misc/auto93.csv" # Adjust the file path as needed
     d = DATA().adds(csv(data_file))  # Add the data to the DATA instance
-    point = r_c(data_file)
+    point = run_comparison(data_file)
     d_chebyshev = d.chebyshev(point[2])
     assert len(d_chebyshev.point[2]) > 0,  "Test failed: chebyshevs() returned no rows"
     top_item = d_chebyshev.point[2]
@@ -65,8 +35,8 @@ def test_shuffle(data_file):
 def test_dumb_smart_comparison(data_file):
 
     data_file = "data/misc/auto93.csv"
-    point = r_c(data_file)  # 调用 run_comparison 并获取结果
-   # point = r_c()  #" work with return [dumb, smart]"
+    point = run_comparison(data_file)  # 调用 run_comparison 并获取结果
+    # point = run_comparison()  #" work with return [dumb, smart]"
     assert len(point[0]) == 20, "Test failed: Dumb approach did not run 20 times" #"0 dump"
     assert len(point[1]) == 20, "Test failed: Smart approach did not run 20 times" #"1 smart"
     print("run_comparison successfully executed 20 times for both 'dumb' and 'smart' approaches")
@@ -110,10 +80,4 @@ def run_all_tests(data_file):
 # 直接调用所有测试
 data_file = "data/misc/auto93.csv"  # 替换为你的数据文件路径
 run_all_tests(data_file)
-
-
-
-
-
-
 
