@@ -36,20 +36,13 @@ The project runs experiments on datasets with varying dimensionality to validate
     cd CSC591-024HW/HW3
     ```
 
-3. Run the following command to set up the environment (if using `venv`):
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate
-   ```
-
-4. Install `pytest` for testing:
+3. Install `pytest` for testing:
 
    ```bash
    pip install pytest
    ```
 
-5. Ensure that all the data files required for the experiments are placed in the `data` directory.
+4. Ensure that all the data files required for the experiments are placed in the `data` directory.
 
 ## Running the Experiments
 ### Command Line Execution
@@ -57,7 +50,7 @@ The project runs experiments on datasets with varying dimensionality to validate
    To run a comparative analysis between "dumb" and "smart" strategies on a given dataset:
    
    ```bash
-   python SnD.py path/to/data.csv
+   python3.13 SnD.py path/to/data.csv
    ```
 
 2. **Makefile Commands (Multiple cases)**:
@@ -66,9 +59,12 @@ The project runs experiments on datasets with varying dimensionality to validate
         make SnD_low_dim > SnD_low_dim.sh &
         make SnD_other_dim > SnD_other_dim.sh &
         ```
-    - Run experiments, the outputs will be logged to separate files in the `tmp/SnD` directory:
+    - Run experiments on low-dimensional data, the outputs will be logged to separate files in the `tmp/SnD/low_dim` directory:
         ```bash
         bash SnD_low_dim.sh
+        ```
+    - Run experiments on high-dimensional data, the outputs will be logged to separate files in the `tmp/SnD/other_dim` directory (I do not recommend running this step along with the previous one, as both will submit a large number of jobs to the background simultaneously. You can track this progress by type `ps | grep python3.13` in the terminal):
+        ```bash
         bash SnD_other_dim.sh
         ```
 
@@ -104,11 +100,49 @@ In this script, we verified the following points:
 - Does you code really run some experimental treatment 20 times for statistical validity?
 - Does `d.shuffle()` really jiggle the order of the data?
 
+Here's the screenshot of the test result:
+
+![res_test](pics/res_test.png)
+
 ## Summary of Results
 After completing the experiments, we use the `rq.sh` script to analyze and interpret the results. The output is showed below:
 
 ```bash
-# tobe filled
+# Results on low-dimensional data
+RANK         0           1            2           3           4
+smart       87          13                                     
+baseline                33           27           7          33
+dumb        67          13           20                        
+#
+#EVALS
+RANK               0           1            2           3           4
+smart       28 (  4)    35 (  0)      0 (  0)     0 (  0)     0 (  0)
+baseline     0 (  0)   4118 (  0)   668 (  0)   259 (  0)   643 (  0)
+dumb        26 (  8)    25 (  0)     30 (  0)     0 (  0)     0 (  0)
+#
+#DELTAS
+RANK               0           1            2           3           4
+smart       76 ( 29)    36 (  0)      0 (  0)     0 (  0)     0 (  0)
+baseline     0 (  0)     0 (  0)      0 (  0)     0 (  0)     0 (  0)
+dumb        65 ( 29)    61 (  0)     71 (  0)     0 (  0)     0 (  0)
+
+# Results on high-dimensional data
+RANK         0            1            2            3            4            5
+smart       88           12                                                    
+baseline     3           24           21           24           15           15
+dumb        50           32           15            3                          
+#
+#EVALS
+RANK               0            1            2            3            4            5
+smart       32 ( 12)     25 (  0)      0 (  0)      0 (  0)      0 (  0)      0 (  0)
+baseline   3840 (  0)   2834 (  0)   9618 (  0)   3094 (  0)   3687 (  0)   34523 (  0)
+dumb        26 (  0)     35 ( 12)     40 (  0)     30 (  0)      0 (  0)      0 (  0)
+#
+#DELTAS
+RANK               0            1            2            3            4            5
+smart       72 ( 23)     51 (  0)      0 (  0)      0 (  0)      0 (  0)      0 (  0)
+baseline     0 (  0)      0 (  0)      0 (  0)      0 (  0)      0 (  0)      0 (  0)
+dumb        65 ( 26)     62 ( 19)     60 (  0)     75 (  0)      0 (  0)      0 (  0)
 ```
 
 ## Conclusion

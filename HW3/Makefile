@@ -20,7 +20,7 @@ SnD_low_dim: ## experiment: Smart and Dumb on low-dimension data
 	$(foreach d, config hpo misc process, \
 		$(foreach f, $(wildcard $(Data)/$d/*.csv), \
 			$(if $(filter yes,$(call is_low_dim,$(f))), \
-				echo "python3 $(PWD)/SnD.py $(f) | tee $(Out)/$(Act)/low_dim/$(shell basename $(f)) & "; \
+				echo "python3.13 $(PWD)/SnD.py $(f) | tee $(Out)/$(Act)/low_dim/$(shell basename $(f)) & "; \
 			) \
 		) \
 	)
@@ -31,7 +31,7 @@ SnD_other_dim: ## experiment: Smart and Dumb on non-low-dimension data
 	$(foreach d, config hpo misc process, \
 		$(foreach f, $(wildcard $(Data)/$d/*.csv), \
 			$(if $(filter no,$(call is_low_dim,$(f))), \
-				echo "python3 $(PWD)/SnD.py $(f) | tee $(Out)/$(Act)/other_dim/$(shell basename $(f)) & "; \
+				echo "python3.13 $(PWD)/SnD.py $(f) | tee $(Out)/$(Act)/other_dim/$(shell basename $(f)) & "; \
 			) \
 		) \
 	)
