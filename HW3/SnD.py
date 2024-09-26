@@ -37,7 +37,7 @@ def run_comparison(data_file):
 
     nd = DATA().adds(csv(data_file))
     b4 = [nd.chebyshev(row) for row in nd.rows]
-    somes = [stats.SOME(b4,f"asIs,{len(nd.rows)}")]
+    somes = [stats.SOME(b4,f"baseline,{len(nd.rows)}")]
     for N in (20, 30, 40, 50):
         d = DATA().adds(csv(data_file))
         
