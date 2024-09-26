@@ -1,80 +1,115 @@
 # JJR Hepo
 
-- JJR1: Nothing works better than 50 random guessed for low dimensional problems (less than 6 x attributes).
-- JJR2: But such random guessing is rubbish for higher dimensional data. Let us test that.
+## Overview
+This project is a Python-based implementation to test a hypotheses in the context of low-dimensional and high-dimensional data. The experiments are designed to compare the performance of random guessing and active learning strategies in finding optimal solutions across various datasets.
 
-This is a repo varifying this hepotheses
+### Hypotheses Tested
+1. **JJR1**: Nothing works better than 50 random guessed for low dimensional problems (less than 6 x attributes).
+2. **JJR2**: But such random guessing is rubbish for higher dimensional data.
 
-----------------------------------
+The project runs experiments on datasets with varying dimensionality to validate these hypotheses.
 
-For over two decades, I have been mentoring people about SE and AI.
-When you do that, after a while, you realize:
+## Project Structure
 
-- When it is all said and done, you only need  a dozen or so cool tricks;
-- Other people really only need a  few dozen or so bits of AI theory;
-- Everyone  could have more fun, and get more done, if we avoided
-  the same dozen or so traps.
+- `ezr.py`: Core functionality for handling data structure and active learning (credit to [timm/ezr](https://github.com/timm/ezr/tree/24Aug14)).
+- `SnD.py`: Implements comparison between random sampling ("dumb") and active learning ("smart") strategies on different datasets.
+- `test_code.py`: Unit tests to validate the correctness of the implemented methods.
+- `Makefile`: Commands to automate experimental runs on different datasets based on their dimensionality.
+- `rq.sh`: Script to aggregate and summarize experimental results.
 
-So I decided to write down that theory and those tricks and    traps
-(see below).  I took some XAI code (explainable AI) I'd written for
-semi-supervised multiple-objective optimization. Then I wrote notes
-on any part of the code where  I had spent time helping helping
-people with  those tricks, theory and traps.
+## Installation
+### Prerequisites
+- Python 3.13
+- No third-party libraries are required except for `pytest` (for testing).
 
-Here is how the notes are labelled. For way-out ideas, read the 500+ ones.
-For good-old-fashioned command-line warrior stuff, see 100-200
+### Setup
+1. Install Python3.13. On Linux, doing so by running the command (credit to [Fundamentals](https://txt.github.io/se24fall/03code.html#try-it-for-yourself)):
 
-- Odd number items are about SE;
-- So even numbers are about AI;
-- 
+    ```bash
+    sudo apt update -y; sudo  apt upgrade -y; sudo apt install software-properties-common -y; sudo add-apt-repository ppa:deadsnakes/ppa -y ; sudo apt update -y ; sudo apt install python3.13 -y
+    ```
 
-|Anit-patterns<br>(things not to do) | SE system | SE coding | AI coding | AI theory<br>(standard) | New AI ideas| 
-|:----------------------------------:|:---------:|:---------:|:---------:|:-----------------------:|:-----------:|
-|00 - 99                             | 100 - 199 |  200-299  | 300-399   | 400 - 499               |  500-599    | 
+2. Clone the repository and navigate to teh project directory.
 
+    ```bash
+    git clone https://github.com/DHP-NCSU/CSC591-024HW.git
+    cd CSC591-024HW/HW3
+    ```
 
-One more thing.  The SE and AI literature is full of bold experiments
-that try a range of new ideas.  But some new ideas are better than
-others. With all little time, and lots of implementation experience,
-we can focus of which  ideas offer the "most bang per buck".
+3. Run the following command to set up the environment (if using `venv`):
 
-Share and enjoy.
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
 
-## Setting Up
+4. Install `pytest` for testing:
 
-### Get some example data
+   ```bash
+   pip install pytest
+   ```
 
-### Installation
+5. Ensure that all the data files required for the experiments are placed in the `data` directory.
 
-First get some test data:
+## Running the Experiments
+### Command Line Execution
+1. **Run Comparison (Single case)**:
+   To run a comparative analysis between "dumb" and "smart" strategies on a given dataset:
+   
+   ```bash
+   python SnD.py path/to/data.csv
+   ```
 
-    git clone http://github.com/timm/data
+2. **Makefile Commands (Multiple cases)**:
+    - Generate script to run experiments on low- and high-dimensional data (This will take a while. Let's take a break =^_^=):
+        ```bash
+        make SnD_low_dim > SnD_low_dim.sh &
+        make SnD_other_dim > SnD_other_dim.sh &
+        ```
+    - Run experiments, the outputs will be logged to separate files in the `tmp/SnD` directory:
+        ```bash
+        bash SnD_low_dim.sh
+        bash SnD_other_dim.sh
+        ```
 
-Just grab the code:
+### Experimental Results Summary
+After running the experiments, results are summarized using the `rq.sh` script. To view the results:
+```bash
+cd tmp/SnD/low_dim
+bash ../../../rq.sh
+```
 
-    git clone http://github.com/timm/ezr
-    cd ezr/src
-    python3 -B ezr.py -t path2data/misc/auto93.csv -e all
+This will generate tables with metrics such as:
+- **RANKS**: Frequency of each strategy appearing in different ranks.
+- **EVALS**: Evaluation budgets used for achieving those ranks.
+- **DELTAS**: Percentage improvement over the baseline performance.
 
-Or install from local code (if you edit the code, those changes are
-instantly accessible):
+Similarly, you can summarize the results on high-dimensional data:
+```bash
+cd tmp/SnD/other_dim
+bash ../../../rq.sh
+```
 
-    git clone http://github.com/timm/ezr
-    cd ezr
-    pip [-e] install ./setup.py
-    ezr -t path2data/misc/auto93.csv -e all # test the isntall
+## Running Tests
+To verify the correctness of the code, run the tests using `pytest`:
 
-Install from the web. Best if you want to just want to import the code,
-the write you own extensions
+```bash
+pytest test_code.py
+```
 
-    pip install ezr
-    ezr -t path2data/misc/auto93.csv -e all # test the install
+In this script, we verified the following points:
 
+- Does `chebyshevs().rows[0]` return the top item in that sort?
+- Are smart and dumb lists the right length (i.e. N)?
+- Does you code really run some experimental treatment 20 times for statistical validity?
+- Does `d.shuffle()` really jiggle the order of the data?
 
-###  Running the code 
+## Summary of Results
+After completing the experiments, we use the `rq.sh` script to analyze and interpret the results. The output is showed below:
 
-This code has lots of
-`eg.xxx()` functions. Each of these can be called on the command line
-using, say:
+```bash
+# tobe filled
+```
 
-     python3 -B ezr.py -e klass      # calls the eg.klass() function
+## Conclusion
+Based on the observed results from the experiments...
